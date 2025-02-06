@@ -1,43 +1,123 @@
-import { Tabs } from 'expo-router';
+
 import React from 'react';
-import { Platform } from 'react-native';
+import { Tabs } from 'expo-router/tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        headerShown:false,
+        tabBarStyle: {
+          height: 80,
+          paddingTop: 15,
+          backgroundColor: '#fff',
+          borderTopWidth: 1, 
+          borderTopColor: '#e0e0e0', 
+        },
+        tabBarItemStyle: {
+          marginTop: 5
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="invoices"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons
+                name={focused ? 'receipt' : 'receipt-outline'}
+                color={focused ? 'tomato' : 'gray'}
+                size={29}
+              />
+              <Text
+                style={{
+                  color: focused ? 'tomato' : 'gray',
+                  fontSize: 12,
+                  width: '100%',
+                }}
+              >
+                Invoices
+              </Text>
+            </View>
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="explore"
+        name="clients"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons
+                name={focused ? 'people' : 'people-outline'}
+                color={focused ? 'tomato' : 'gray'}
+                size={29}
+              />
+              <Text
+                style={{
+                  color: focused ? 'tomato' : 'gray',
+                  fontSize: 12,
+                  width: '100%',
+                }}
+              >
+                Clients
+              </Text>
+            </View>
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="company-details"
+        options={{
+          title: '',
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons
+                name={focused ? 'business' : 'business-outline'}
+                color={focused ? 'tomato' : 'gray'}
+                size={29}
+              />
+              <Text
+                style={{
+                  color: focused ? 'tomato' : 'gray',
+                  fontSize: 12,
+                  width: '100%',
+                }}
+              >
+                Company
+              </Text>
+            </View>
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: '',
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons
+                name={focused ? 'settings' : 'settings-outline'}
+                color={focused ? 'tomato' : 'gray'}
+                size={29}
+              />
+              <Text
+                style={{
+                  color: focused ? 'tomato' : 'gray',
+                  fontSize: 12,
+                  width: '100%',
+                }}
+              >
+                Setting
+              </Text>
+            </View>
+          ),
         }}
       />
     </Tabs>
