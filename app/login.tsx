@@ -102,16 +102,16 @@ export default function Login() {
         onFocus={() => setPasswordFocused(true)}
         onBlur={() => setPasswordFocused(false)}
       />
-       <TouchableOpacity
-            onPress={() => setPasswordVisible(!passwordVisible)}
-            style={styles.eyeIcon}
-          >
-            <Ionicons
-              name={passwordVisible ? "eye-off" : "eye"}
-              size={24}
-              color="gray"
-            />
-          </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => setPasswordVisible(!passwordVisible)}
+        style={styles.eyeIcon}
+      >
+        <Ionicons
+          name={passwordVisible ? "eye-off" : "eye"}
+          size={24}
+          color="gray"
+        />
+      </TouchableOpacity>
       <HelperText type="error" visible={passwordfocused && passwordhasErrors()}>
         Passwords at least 6 characters!
       </HelperText>
@@ -140,9 +140,7 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: "absolute",
     right: 12,
-    top:"60%",
-    
-   
+    top: "60%",
   },
   loadingContainer: {
     position: "absolute",

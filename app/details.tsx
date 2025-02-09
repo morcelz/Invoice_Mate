@@ -30,7 +30,6 @@ const currencies = [
   { label: "USD", value: "USD" },
   { label: "EUR", value: "EUR" },
   { label: "GBP", value: "GBP" },
- 
 ];
 
 const countries = [
@@ -72,7 +71,6 @@ export default function CompanyDetails() {
     local_currency: false,
     local_tax_percentage: false,
   });
-
 
   const handleInputChange = (key: string, text: string) => {
     setFormData({
@@ -170,9 +168,11 @@ export default function CompanyDetails() {
           hasErrors: (value: string) => value.length < 4,
           errorMessage: "Zip code must be at least 4 characters long!",
         },
-        { label: "Country ...", key: "country" ,
-        hasErrors: (value: string) => value.length === 0,
-        errorMessage: "Country is required!",
+        {
+          label: "Country ...",
+          key: "country",
+          hasErrors: (value: string) => value.length === 0,
+          errorMessage: "Country is required!",
         },
       ],
     },
@@ -185,24 +185,30 @@ export default function CompanyDetails() {
           hasErrors: (value: string) => value.length < 8,
           errorMessage: "Phone number must be at least 8 characters long!",
         },
-        { label: "Email ...", key: "email" ,
-          hasErrors: (value: string) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+        {
+          label: "Email ...",
+          key: "email",
+          hasErrors: (value: string) =>
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
           errorMessage: "Invalid email address!",
-
         },
       ],
     },
     {
       label: "Financial Details",
       fields: [
-        { label: "Currency ...", key: "local_currency" ,
-        hasErrors: (value: string) => value.length === 0,
-        errorMessage: "Currency is required!",
+        {
+          label: "Currency ...",
+          key: "local_currency",
+          hasErrors: (value: string) => value.length === 0,
+          errorMessage: "Currency is required!",
         },
-        { label: "Tax rate ...", key: "local_tax_percentage",
-        hasErrors: (value: string) => value.length < 2,
-        errorMessage: "Tax rate must be at least 2 characters long!",
-         },
+        {
+          label: "Tax rate ...",
+          key: "local_tax_percentage",
+          hasErrors: (value: string) => value.length < 2,
+          errorMessage: "Tax rate must be at least 2 characters long!",
+        },
       ],
     },
     {
@@ -281,19 +287,25 @@ export default function CompanyDetails() {
                 style={styles.underlinedInput}
                 value={formData[field.key as keyof FormData] || ""}
                 onChangeText={(text) => handleInputChange(field.key, text)}
-                onFocus={() => setFocused(prev => ({ ...prev, [field.key]: true }))}
-                onBlur={() => setFocused(prev => ({ ...prev, [field.key]: false }))}
+                onFocus={() =>
+                  setFocused((prev) => ({ ...prev, [field.key]: true }))
+                }
+                onBlur={() =>
+                  setFocused((prev) => ({ ...prev, [field.key]: false }))
+                }
               />
-              {field.hasErrors && field.errorMessage && Boolean(focused[field.key as keyof FormData]) && (
-                <HelperText
-                  type="error"
-                  visible={field.hasErrors(
-                    formData[field.key as keyof FormData] || ""
-                  )}
-                >
-                  {field.errorMessage}
-                </HelperText>
-              )}
+              {field.hasErrors &&
+                field.errorMessage &&
+                Boolean(focused[field.key as keyof FormData]) && (
+                  <HelperText
+                    type="error"
+                    visible={field.hasErrors(
+                      formData[field.key as keyof FormData] || ""
+                    )}
+                  >
+                    {field.errorMessage}
+                  </HelperText>
+                )}
             </>
           );
         }

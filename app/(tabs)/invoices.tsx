@@ -10,7 +10,6 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import { Switch } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { Invoice } from "@/types/invoice";
 import InvoiceItem from "@/componenets/InvoiceItem";
@@ -21,7 +20,6 @@ import { Buffer } from "buffer";
 import * as Print from "expo-print";
 import * as FileSystem from "expo-file-system";
 import { useDataContext } from "@/contexts/data-context";
-
 export default function Invoices() {
   const { clients, fetchClients } = useDataContext();
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -340,7 +338,9 @@ export default function Invoices() {
         return;
       }
 
-      const invoiceToSent = editingInvoice as typeof editingInvoice & { file: any }
+      const invoiceToSent = editingInvoice as typeof editingInvoice & {
+        file: any;
+      };
       delete invoiceToSent.file;
 
       const token = await AsyncStorage.getItem("token");
@@ -388,7 +388,6 @@ export default function Invoices() {
   }, []);
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Invoices</Text>
         <TouchableOpacity
@@ -399,7 +398,6 @@ export default function Invoices() {
         </TouchableOpacity>
       </View>
 
-      {/* Invoices List */}
       {invoices.length ? (
         <FlatList
           data={invoices}
@@ -413,12 +411,11 @@ export default function Invoices() {
         </View>
       )}
 
-      {/* Add Invoice Modal */}
       <Modal visible={isAddModalVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
           <ScrollView style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add New Invoice</Text>
-            {/* Invoice Details */}
+
             <Picker
               selectedValue={newInvoice.client_id}
               onValueChange={(itemValue) =>
@@ -491,7 +488,7 @@ export default function Invoices() {
                   value={item.quantity ? item.quantity.toString() : ""}
                   onChangeText={(text) => {
                     const updatedItems = [...newInvoice.invoiceItems];
-                    updatedItems[index].quantity = text as unknown as number; 
+                    updatedItems[index].quantity = text as unknown as number;
                     setNewInvoice({
                       ...newInvoice,
                       invoiceItems: updatedItems,
@@ -514,7 +511,6 @@ export default function Invoices() {
                   }}
                 />
 
-                {/* Remove Item Button */}
                 <TouchableOpacity
                   onPress={() => {
                     const updatedItems = newInvoice.invoiceItems.filter(
@@ -531,7 +527,7 @@ export default function Invoices() {
                 </TouchableOpacity>
               </View>
             ))}
-            {/* Add New Item Button */}
+
             <TouchableOpacity
               onPress={() => {
                 setNewInvoice({
@@ -745,7 +741,6 @@ export default function Invoices() {
                     value={companyDetails.local_currency}
                   />
                 </Picker>
-                {/* Creation Date Picker */}
                 <TouchableOpacity
                   onPress={() => setShowCreationDatePicker(true)}
                 >
@@ -758,8 +753,6 @@ export default function Invoices() {
                 </TouchableOpacity>
                 {showCreationDatePicker &&
                   renderDatePicker("creation_date", "editingInvoice")}{" "}
-                {/* Pass 'editingInvoice' as target */}
-                {/* Due Date Picker */}
                 <TouchableOpacity onPress={() => setShowDueDatePicker(true)}>
                   <TextInput
                     placeholder="Due Date *"

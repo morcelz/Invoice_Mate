@@ -37,7 +37,7 @@ const InvoiceItemComponent = ({
         onPress={() => toggleAccordion(item.id)}
         style={styles.invoiceHeader}
       >
-        <Text style={styles.invoiceId}>{item.invoice_id}</Text>
+        <Text style={styles.invoiceId}>{`INV/${item.creation_date.split('-')[0]}/${item.id}`}</Text>
         <Ionicons
           name={item.isExpanded ? "chevron-up" : "chevron-down"}
           size={20}

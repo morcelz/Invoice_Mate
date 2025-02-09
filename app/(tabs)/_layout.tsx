@@ -1,42 +1,41 @@
-
-import React from 'react';
-import { Tabs } from 'expo-router/tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { Text, View } from 'react-native';
+import React from "react";
+import { Tabs } from "expo-router/tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { Text, View } from "react-native";
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown:false,
+        headerShown: false,
         tabBarStyle: {
           height: 80,
           paddingTop: 15,
-          backgroundColor: '#fff',
-          borderTopWidth: 1, 
-          borderTopColor: '#e0e0e0', 
+          backgroundColor: "#fff",
+          borderTopWidth: 1,
+          borderTopColor: "#e0e0e0",
         },
         tabBarItemStyle: {
-          marginTop: 5
+          marginTop: 5,
         },
       }}
     >
       <Tabs.Screen
         name="invoices"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Ionicons
-                name={focused ? 'receipt' : 'receipt-outline'}
-                color={focused ? 'tomato' : 'gray'}
+                name={focused ? "receipt" : "receipt-outline"}
+                color={focused ? "tomato" : "gray"}
                 size={29}
               />
               <Text
                 style={{
-                  color: focused ? 'tomato' : 'gray',
+                  color: focused ? "tomato" : "gray",
                   fontSize: 12,
-                  width: '100%',
+                  width: "100%",
                 }}
               >
                 Invoices
@@ -49,19 +48,19 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="clients"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Ionicons
-                name={focused ? 'people' : 'people-outline'}
-                color={focused ? 'tomato' : 'gray'}
+                name={focused ? "people" : "people-outline"}
+                color={focused ? "tomato" : "gray"}
                 size={29}
               />
               <Text
                 style={{
-                  color: focused ? 'tomato' : 'gray',
+                  color: focused ? "tomato" : "gray",
                   fontSize: 12,
-                  width: '100%',
+                  width: "100%",
                 }}
               >
                 Clients
@@ -74,19 +73,19 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="company-details"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Ionicons
-                name={focused ? 'business' : 'business-outline'}
-                color={focused ? 'tomato' : 'gray'}
+                name={focused ? "business" : "business-outline"}
+                color={focused ? "tomato" : "gray"}
                 size={29}
               />
               <Text
                 style={{
-                  color: focused ? 'tomato' : 'gray',
+                  color: focused ? "tomato" : "gray",
                   fontSize: 12,
-                  width: '100%',
+                  width: "100%",
                 }}
               >
                 Company
@@ -99,19 +98,19 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Ionicons
-                name={focused ? 'settings' : 'settings-outline'}
-                color={focused ? 'tomato' : 'gray'}
+                name={focused ? "settings" : "settings-outline"}
+                color={focused ? "tomato" : "gray"}
                 size={29}
               />
               <Text
                 style={{
-                  color: focused ? 'tomato' : 'gray',
+                  color: focused ? "tomato" : "gray",
                   fontSize: 12,
-                  width: '100%',
+                  width: "100%",
                 }}
               >
                 Setting

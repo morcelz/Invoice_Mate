@@ -1,82 +1,85 @@
-
-
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  TextInput,
+  ScrollView,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Settings() {
   const router = useRouter();
   const [isSecurityExpanded, setIsSecurityExpanded] = useState(false);
-  
- 
 
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handlePasswordChange = async () => {
     if (currentPassword === newPassword) {
-      setError('New password cannot be the same as the current password');
+      setError("New password cannot be the same as the current password");
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
-   
     try {
-      const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/change-password`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          currentPassword,
-          newPassword,
-          confirmPassword,
-        }),
-      });
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/users/change-password`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            currentPassword,
+            newPassword,
+            confirmPassword,
+          }),
+        }
+      );
 
-      const data= await response.json();
+      const data = await response.json();
 
       if (data.message) {
-        Alert.alert('Succes','Password changed successfully');
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmPassword('');
+        Alert.alert("Succes", "Password changed successfully");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
       } else {
         setError(data.error);
       }
     } catch (error) {
-      setError('Error while changing password');
+      setError("Error while changing password");
       console.error(error);
     }
   };
 
- 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem("token");
     Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
+      "Logout",
+      "Are you sure you want to logout?",
       [
         {
-          text: 'Cancel',
-          style: 'cancel',
+          text: "Cancel",
+          style: "cancel",
         },
         {
-          text: 'Logout',
+          text: "Logout",
           onPress: () => {
-           
             AsyncStorage.clear().then(() => {
-              router.push('/login');
+              router.push("/login");
             });
           },
         },
@@ -86,19 +89,18 @@ export default function Settings() {
   };
   const handleDeleteAccount = () => {
     Alert.alert(
-      'Delete Account',
-      'Are you sure you want to delete your account? This action cannot be undone.',
+      "Delete Account",
+      "Are you sure you want to delete your account? This action cannot be undone.",
       [
         {
-          text: 'Cancel',
-          style: 'cancel',
+          text: "Cancel",
+          style: "cancel",
         },
         {
-          text: 'Delete',
+          text: "Delete",
           onPress: () => {
-            
             AsyncStorage.clear().then(() => {
-              router.push('/login'); 
+              router.push("/login");
             });
           },
         },
@@ -121,10 +123,13 @@ export default function Settings() {
       </View>
 
       <View style={styles.section}>
-        <TouchableOpacity onPress={toggleSecurity} style={styles.accordionHeader}>
+        <TouchableOpacity
+          onPress={toggleSecurity}
+          style={styles.accordionHeader}
+        >
           <Text style={styles.sectionTitle}>Security</Text>
           <Ionicons
-            name={isSecurityExpanded ? 'chevron-up' : 'chevron-down'}
+            name={isSecurityExpanded ? "chevron-up" : "chevron-down"}
             size={24}
             color="tomato"
           />
@@ -161,7 +166,10 @@ export default function Settings() {
 
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-              <TouchableOpacity style={styles.button} onPress={handlePasswordChange}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handlePasswordChange}
+              >
                 <Text style={styles.buttonText}>Change</Text>
               </TouchableOpacity>
             </View>
@@ -170,7 +178,10 @@ export default function Settings() {
       </View>
 
       <View style={styles.section}>
-        <TouchableOpacity onPress={handleDeleteAccount} style={styles.deleteButton}>
+        <TouchableOpacity
+          onPress={handleDeleteAccount}
+          style={styles.deleteButton}
+        >
           <Text style={styles.deleteButtonText}>DELETE ACCOUNT</Text>
         </TouchableOpacity>
       </View>
@@ -182,66 +193,62 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
-  text:{
+  text: {
     fontSize: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginRight: 'auto',
-    
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginRight: "auto",
   },
 
   button: {
-    backgroundColor: 'black',
+    backgroundColor: "black",
     padding: 12,
     borderRadius: 4,
-    alignItems: 'center',
-    marginBottom:10,
+    alignItems: "center",
+    marginBottom: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   underlinedInput: {
-    borderBottomWidth: 1, 
-    borderBottomColor: '#ccc', 
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
     padding: 8,
     marginBottom: 16,
-    flex:1,
-    width:'100%',
+    flex: 1,
+    width: "100%",
   },
-  accordionPass:{
+  accordionPass: {
     padding: 50,
     borderRadius: 10,
     width: 300,
-    paddingRight:10,
-    
-
+    paddingRight: 10,
   },
-  detailchange:{
-    marginBottom:10,
-    paddingHorizontal:200,
-
+  detailchange: {
+    marginBottom: 10,
+    paddingHorizontal: 200,
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginBottom: 8,
   },
 
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 24,
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   logoutButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 16,
     right: 16,
     zIndex: 1,
@@ -251,65 +258,62 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 40,
   },
   accordionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 12,
   },
   accordionContent: {
     marginTop: 8,
-    marginBlock:5,
+    marginBlock: 5,
   },
   detailRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 12,
   },
   detailLabel: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#555',
+    fontWeight: "bold",
+    color: "#555",
   },
   detailValue: {
     fontSize: 16,
-    color: '#000',
+    color: "#000",
   },
   securityButton: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   securityButtonText: {
     fontSize: 16,
   },
   deleteButton: {
-    backgroundColor: 'tomato',
+    backgroundColor: "tomato",
     borderRadius: 8,
     padding: 12,
-    alignItems: 'center',
+    alignItems: "center",
   },
   deleteButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
-    
+    fontWeight: "bold",
   },
-  pass:{
-    backgroundColor:'#f5f5f5',
-    marginBottom:20,
-    borderRadius:20,
-    alignItems:"center" ,
-
-
-   }
+  pass: {
+    backgroundColor: "#f5f5f5",
+    marginBottom: 20,
+    borderRadius: 20,
+    alignItems: "center",
+  },
 });
